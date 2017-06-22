@@ -1,15 +1,19 @@
-FROM centos:6.9
+FROM centos:7.3.1611
 MAINTAINER furuyamah <furuyamah@isao.co.jp>
 
 RUN yum update -y && \
     yum install -y epel-release && \
-    rpm -Uvh http://rpms.famillecollet.com/enterprise/remi-release-6.rpm && \
-    yum install -y --enablerepo=remi mysql compat-mysql51 && \
-    yum install -y gcc ImageMagick-devel curl-devel fuse git syslog crontabs wget && \
+    rpm -ivh http://rpms.famillecollet.com/enterprise/remi-release-7.rpm && \
     yum install -y \
+        crontabs \
+        mysql \
+        wget \
+        fuse \
+        git \
         httpd \
         httpd-devel \
         httpd-tools \
+        mod_ssl \
         php \
         php-cli \
         php-common \
@@ -21,13 +25,14 @@ RUN yum update -y && \
         php-mysql \
         php-pdo \
         php-pear \
-        php-pecl-apc \
         php-pecl-memcache \
+        php-pecl-apcu \
+        php-pecl-ssh2 \
+        php-pecl-zendopcache \
         php-xml \
         php-xmlrpc && \
     pecl clear-cache && \
-    printf "\n" | pecl install imagick-3.1.2 && \
-    printf "\n" | pecl install pecl_http-1.7.6
+    pear install Crypt_Blowfish 
 
 # for mount S3
 RUN mkdir -p /root/go/bin && \
@@ -36,3 +41,4 @@ RUN mkdir -p /root/go/bin && \
     mkdir /root/.aws
 
 WORKDIR /var/www
+
