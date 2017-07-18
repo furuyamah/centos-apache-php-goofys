@@ -31,8 +31,7 @@ RUN yum update -y && \
 
 # for mount S3
 RUN mkdir -p /root/go/bin && \
-    wget https://github.com/kahing/goofys/releases/download/v0.0.12/goofys -O /root/go/bin/goofys && \
+    wget https://github.com/kahing/goofys/releases/download/v0.0.13/goofys -O /root/go/bin/goofys && \
     chmod a+x /root/go/bin/goofys  && \
     mkdir /root/.aws
-
 WORKDIR /var/www
